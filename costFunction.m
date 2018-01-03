@@ -1,7 +1,6 @@
 function J = costFunction(X, y, theta)
 %COSTFUNCTION compute cost for linear regression
-%   J = costFunction(X, y, theta) returns cost of current X, y, theta
-
+%   J = costFunction returns cost using h = X * theta (linear regression)
 m = size(X, 1);
 J = 0;
 

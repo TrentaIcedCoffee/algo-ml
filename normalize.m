@@ -1,9 +1,6 @@
 function [XNormal, meanVec, stdVec] = normalize(X)
 %NORMALIZE normalizes X
-%   NORMALIZE(X) returns XNormal, meanVec has mean
-%   for each feature, stdVec has standard derivation
-%   for each feature.
-%   for i feature, mean(X(:, i)) = 0; std(X(:, i)) = 1;
+%   mean(X(:, i)) = 0; std(X(:, i)) = 1;
 
 m = size(X, 1); % m examples
 n = size(X, 2); % n features, m has size (m, n)
