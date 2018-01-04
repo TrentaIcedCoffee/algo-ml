@@ -45,4 +45,17 @@ if abs(costRun - costExpect) > 0.01 ||...
 end
 fprintf('costFunction.m ok\n');
 
-% BREAKPOINT
+%% Debug mapPolynomial.m
+valueExpect = 3238552.76;
+XPolynomialRun = mapPolynomial(X(:, 1), X(:, 2));
+valueRun = XPolynomialRun(1, 12);
+
+fprintf('value, run %.2f, expect %.2f\n', valueRun, valueExpect);
+if abs(valueRun - valueExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('mapPolynomial.m ok\n');
+
+%% Summary
+fprintf('all ok\n');
