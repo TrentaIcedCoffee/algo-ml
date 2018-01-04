@@ -8,24 +8,61 @@
 %   normalEquation.m
 
 %% Initialization
-clear all;
+clear;
 close all;
 clc;
 
-%% Load data
 load('linear_regression.mat');
+m = size(X, 1);
+n = size(X, 2);
 
 %% Debug plotData.m
 x = X;
 plotData(x, y, 'plotDebug', 'xlabel', 'ylabel');
 
 %% Debug normalize.m
-m = size(X, 1);
+meanExpect = 0;
+stdExpect = 1;
 [XNormal, meanVec, stdVec] = normalize(X);
-fprintf('mean(XNormal)');
-disp(mean(XNormal, 1));
-fprintf('\n');
-fprintf('std(XNormal, [], 1)');
-disp(std(XNormal, [], 1));
+meanRun = mean(XNormal, 1);
+stdRun = std(XNormal, [], 1);
 
-%% BREAKPOINT
+fprintf('mean, run %.2f, expect %.2f\n', meanRun, meanExpect);
+if abs(meanRun - meanExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('std, run %.2f, expect %.2f\n', stdRun, stdExpect);
+if abs(stdRun - stdExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('normalize.m ok\n');
+
+
+%% Debug costFunction.m
+costExpect = 32.07;
+costRun = costFunction([ones(m, 1), X], y, [0; 0]);
+
+fprintf('cost, run %.2f, expect %.2f\n', costRun, costExpect);
+if abs(costRun - costExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('costFunctions.m ok\n');
+
+%% Debug gradientDescent.m
+thetaExpect = [-3.63; 1.17];
+thetaRun = gradientDescent([ones(m, 1), X], y, [0; 0], 0.01, 1500);
+
+fprintf('theta, run %.2f, expect %.2f\n', thetaRun, thetaExpect);
+if abs(thetaRun - thetaExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('gradientDescent.m ok\n');
+
+%% Debug normalEquation.m
+thetaRun = normalEquation([ones(m, 1), X], y);
+
+disp(thetaRun);
