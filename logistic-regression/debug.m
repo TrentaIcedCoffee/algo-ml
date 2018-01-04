@@ -44,3 +44,5 @@ if abs(costRun - costExpect) > 0.01 ||...
     return;
 end
 fprintf('costFunction.m ok\n');
+
+% BREAKPOINT
