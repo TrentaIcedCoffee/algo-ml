@@ -78,5 +78,4 @@ end
 fprintf('normalEquation.m ok\n');
 
 %% Summary
-
 fprintf('all ok\n');
