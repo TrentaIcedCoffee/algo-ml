@@ -8,8 +8,8 @@
 %   normalEquation.m
 
 %% Initialization
-clear;
 close all;
+clear;
 clc;
 
 load('linear_regression.mat');
@@ -55,14 +55,28 @@ fprintf('costFunctions.m ok\n');
 thetaExpect = [-3.63; 1.17];
 thetaRun = gradientDescent([ones(m, 1), X], y, [0; 0], 0.01, 1500);
 
-fprintf('theta, run %.2f, expect %.2f\n', thetaRun, thetaExpect);
-if abs(thetaRun - thetaExpect) > 0.01
+fprintf('theta, run %s, expect %s\n',...
+    mat2str(round(thetaRun, 2)),...
+    mat2str(round(thetaExpect, 2)));
+if any(abs(thetaRun - thetaExpect) > 0.01)
     fprintf('ERR\n');
     return;
 end
 fprintf('gradientDescent.m ok\n');
 
 %% Debug normalEquation.m
+thetaExpect = [-3.90; 1.19];
 thetaRun = normalEquation([ones(m, 1), X], y);
 
-disp(thetaRun);
+fprintf('theta, run %s, expect %s\n',...
+    mat2str(round(thetaRun, 2)),...
+    mat2str(round(thetaExpect, 2)));
+if any(abs(thetaRun - thetaExpect) > 0.01)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('normalEquation.m ok\n');
+
+%% Summary
+
+fprintf('all ok\n');
