@@ -4,7 +4,8 @@
 %   displayData.m
 %   sigmoid.m
 %   sigmoidGradient.m
-%   randTheta.m
+%   forwardPropergate.m
+%   backwardPropergate.m
 
 %% Initialization
 close all;
