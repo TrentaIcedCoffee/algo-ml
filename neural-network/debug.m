@@ -54,7 +54,7 @@ fprintf('sigmoidGradient.m ok\n');
 
 %% Debug forwardPropergate.m
 pointExpect = 1.00;
-hypoMat = forwardPropergate(ThetaCell, X);
+[hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
 pointRun = hypoMat(1, 10);
 
 fprintf('point, run %.2f, expect %.2f\n', pointRun, pointExpect);
@@ -66,10 +66,10 @@ fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
 [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-pointExpect = 0.62;
-gradientCell = backwardPropergate(hypoMat, Y, ThetaCell, zCell, aCell);
+pointExpect = 0.000062 * 10000;
+gradientCell = backwardPropergate(0, hypoMat, Y, ThetaCell, zCell, aCell);
 gradientMat1 = cell2mat(gradientCell(1));
-pointRun = gradientMat1(1, 1);
+pointRun = gradientMat1(1, 1) * 10000;
 
 fprintf('point, run %.2f, expect %.2f\n', pointRun, pointExpect);
 if abs(pointRun - pointExpect) > 0.01

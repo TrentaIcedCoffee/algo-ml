@@ -4,6 +4,9 @@ function gradientCell = backwardPropergate(learningRate, hypoMat, Y, ThetaCell, 
 %   gradientCell is derivative of ThetaCell
 %   to obtain hypoMat, zCell and aCell, run forwardPropergate first
 %   forwardPropergate: (X, ThetaCell) -> (hypoMat, zCell, aCell)
+%   zCell, aCell has length layerNumber
+%   zCell(1) is dummy cell
+%   z is raw hypothesis, a is sigmoid hypothesis with bias term
 
 m = size(hypoMat, 1);
 layerNumber = size(ThetaCell, 2) + 1;
@@ -18,9 +21,9 @@ for layer = layerNumber:-1:2
     else
         sigmaPost = cell2mat(sigmaCell(layer + 1));
         theta = cell2mat(ThetaCell(layer));
-        % z = cell2mat(zCell(layer));
+        z = cell2mat(zCell(layer));
         a = cell2mat(aCell(layer));
-        sigmaTemp = (sigmaPost * theta) .* sigmoidGradient(a);
+        sigmaTemp = (sigmaPost * theta) .* sigmoidGradient([ones(size(z, 1), 1) z]);
         sigmaCell(layer) = {sigmaTemp(:, 2:end)};
     end
 end
