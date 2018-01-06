@@ -1,7 +1,7 @@
 %% Debug for neural network
 
 % this file is used to debug the following files
-%   displayData.m
+%   yToY.m
 %   sigmoid.m
 %   sigmoidGradient.m
 %   forwardPropergate.m
@@ -12,68 +12,45 @@ close all;
 clear;
 clc;
 
-load('handwritten-digit.mat');
-load('handwritten-digit-theta.mat');
-m = size(X, 1);
-n = size(X, 2);
-inputElementSize = 400;
-hiddenElementSize = 25;
-outputClassSize = 10; % using 3-layer architecture, with element size [400, 25, 10]
-architecturePara = [inputElementSize, hiddenElementSize, outputClassSize];
-% y has size (sample, 1) -> Y has size (sample, classNumber)
-I = eye(outputClassSize);
-Y = zeros(m, outputClassSize);
-for i = 1:m
-  Y(i, :) = I(y(i), :);
-end
+load('debug.mat')
 
-%% Debug displayData.m
-displayData(X(1, :));
+%% Debug yToY.m
+Y = yToY(y, classNumber);
+if ~isequal(Y, YExpect)
+    fprintf('yToY.m ERR\n');
+    return;
+end
+fprintf('yToY.m ok\n');
 
 %% Debug sigmoid.m
-yExpect = 0.67;
-yRun = sigmoid(0.7);
-
-fprintf('y, run %.2f, expect %.2f\n', yRun, yExpect);
-if abs(yRun - yExpect) > 0.01
-    fprintf('ERR\n');
+sigmoidRun = sigmoid(point);
+if sigmoidRun ~= sigmoidExpect
+    fprintf('sigmoid.m ERR\n');
     return;
 end
 fprintf('sigmoid.m ok\n');
 
 %% Debug sigmoidGradient.m
-gradientExpect = 0.22;
-gradientRun = sigmoidGradient(0.7);
-
-fprintf('gradient, run %.2f, expect %.2f\n', gradientRun, gradientExpect);
-if abs(gradientRun - gradientExpect) > 0.01
-    fprintf('ERR\n');
+sigmoidGradientRun = sigmoidGradient(0.7);
+if sigmoidGradientRun ~= sigmoidGradientExpect
+    fprintf('sigmoidGradient.m ERR\n');
     return;
 end
 fprintf('sigmoidGradient.m ok\n');
 
 %% Debug forwardPropergate.m
-pointExpect = 1.00;
 [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-pointRun = hypoMat(1, 10);
-
-fprintf('point, run %.2f, expect %.2f\n', pointRun, pointExpect);
-if abs(pointRun - pointExpect) > 0.01
-    fprintf('ERR\n');
+if ~isequal(hypoMat, hypoMatExpect) || ~isequal(zCell, zCellExpect) || ~isequal(aCell, aCellExpect)
+    fprintf('forwardPropergate.m ERR\n');
     return;
 end
 fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
 [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-pointExpect = 0.000062 * 10000;
-gradientCell = backwardPropergate(0, hypoMat, Y, ThetaCell, zCell, aCell);
-gradientMat1 = cell2mat(gradientCell(1));
-pointRun = gradientMat1(1, 1) * 10000;
-
-fprintf('point, run %.2f, expect %.2f\n', pointRun, pointExpect);
-if abs(pointRun - pointExpect) > 0.01
-    fprintf('ERR\n');
+gradientCell = backwardPropergate(learningRate, hypoMat, YExpect, ThetaCell, zCell, aCell);
+if ~isequal(gradientCell, gradientCellExpect)
+    fprintf('backwardPropergate.m ERR\n');
     return;
 end
 fprintf('backwardPropergate.m ok\n');

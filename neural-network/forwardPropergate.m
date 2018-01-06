@@ -11,8 +11,8 @@ function [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X)
 layerNumber = size(ThetaCell, 2) + 1;
 classNumber = size(cell2mat(ThetaCell(end)), 1);
 hypoMat = zeros(m, classNumber);
-zCell = cell(layerNumber, 1);
-aCell = cell(layerNumber, 1);
+zCell = cell(1, layerNumber);
+aCell = cell(1, layerNumber);
 
 for layer = 1:layerNumber
     if layer == 1
