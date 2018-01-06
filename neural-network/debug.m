@@ -20,6 +20,12 @@ inputElementSize = 400;
 hiddenElementSize = 25;
 outputClassSize = 10; % using 3-layer architecture, with element size [400, 25, 10]
 architecturePara = [inputElementSize, hiddenElementSize, outputClassSize];
+% y has size (sample, 1) -> Y has size (sample, classNumber)
+I = eye(outputClassSize);
+Y = zeros(m, outputClassSize);
+for i = 1:m
+  Y(i, :) = I(y(i), :);
+end
 
 %% Debug displayData.m
 displayData(X(1, :));
@@ -59,7 +65,18 @@ end
 fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
+[hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
+pointExpect = 0.62;
+gradientCell = backwardPropergate(hypoMat, Y, ThetaCell, zCell, aCell);
+gradientMat1 = cell2mat(gradientCell(1));
+pointRun = gradientMat1(1, 1);
 
+fprintf('point, run %.2f, expect %.2f\n', pointRun, pointExpect);
+if abs(pointRun - pointExpect) > 0.01
+    fprintf('ERR\n');
+    return;
+end
+fprintf('backwardPropergate.m ok\n');
 
 %% Summary
 fprintf('all ok\n');
