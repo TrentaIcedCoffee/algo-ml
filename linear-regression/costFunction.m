@@ -1,5 +1,5 @@
 function cost = costFunction(X, y, theta)
-%COSTFUNCTION compute cost for linear regression
+%COSTFUNCTION Compute cost for linear regression
 %   cost = costFunction returns cost using h = X * theta (linear regression)
 m = size(X, 1);
 cost = 0;

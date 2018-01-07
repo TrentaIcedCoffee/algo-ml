@@ -1,5 +1,5 @@
 function plotData(x, y, pTitle, pXLabel, pYLabel)
-%PLOTDATA plots map R -> R
+%PLOTDATA Plots map R -> R
 %   x, y has same size(~, 1)
 
 figure;
