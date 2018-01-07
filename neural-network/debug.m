@@ -6,6 +6,7 @@
 %   sigmoidGradient.m
 %   forwardPropergate.m
 %   backwardPropergate.m
+%   costFunction.m
 
 %% Initialization
 close all;
@@ -48,12 +49,20 @@ fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
 [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-gradientCell = backwardPropergate(learningRate, hypoMat, YExpect, ThetaCell, zCell, aCell);
+gradientCell = backwardPropergate(regulatingRate, hypoMat, YExpect, ThetaCell, zCell, aCell);
 if ~isequal(gradientCell, gradientCellExpect)
     fprintf('backwardPropergate.m ERR\n');
     return;
 end
 fprintf('backwardPropergate.m ok\n');
+
+%% Debug costFunction.m
+[costRun, gradientVecRun] = costFunction(architecturePara, ThetaCell, X, y, regulatingRate);
+if ~isequal(costRun, costExpect) || ~isequal(gradientVecRun, gradientVecExpect)
+    fprintf('costFunction.m ERR\n');
+    return;
+end
+fprintf('costFunction.m ok\n');
 
 %% Summary
 fprintf('all ok\n');
