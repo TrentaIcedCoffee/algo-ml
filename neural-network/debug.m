@@ -103,7 +103,7 @@ fprintf('predict.m ok\n');
 
 %% Debug accuracy.m
 pred = predict(ThetaCell, X);
-accuracyRun = pAccuracy(pred, y);
+accuracyRun = accuracy(pred, y);
 if ~isequal(accuracyRun, accuracyExpect)
     fprintf('accuracy.m ERR\n');
     return;
