@@ -1,4 +1,4 @@
-function [cost, gradientVec] = costFunctionIter(architecturePara,  ThetaVec, X, y, regulatingRate)
+function [cost, gradientVec] = costFunctionIter(architecturePara, ThetaVec, X, y, regulatingRate)
 %COSTFUNCTIONITER Compute cost and gradient for iteration use
 %   Wrapper of costFunction, use long-ass vec for gradient and Theta
 
@@ -10,4 +10,3 @@ ThetaCell = longAssVecToCell(ThetaVec, architecturePara);
 gradientVec = cellToLongAssVec(gradientCell);
 
 end
-

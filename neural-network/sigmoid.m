@@ -1,5 +1,5 @@
 function y = sigmoid(x)
-%SIGMOID coumpute sigmoid on x
+%SIGMOID Compute sigmoid on x
 %   sigmoid is continuous and has range(0, 1), easy to analyze
 
 y = zeros(size(x));

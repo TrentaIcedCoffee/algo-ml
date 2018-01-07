@@ -1,5 +1,5 @@
 function Y = yToY(y, classNumber)
-%YTOY Convery y has size (sampleNumber, 1) to Y has size (sampleNumber, classNumber)
+%YTOY Convert y has size (sampleNumber, 1) to Y has size (sampleNumber, classNumber)
 %   call yToY when solving multi-class classification
 
 sampleNumber = size(y, 1);

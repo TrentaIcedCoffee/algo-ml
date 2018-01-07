@@ -1,5 +1,5 @@
 function gradient = sigmoidGradient(x)
-%SIGMOIDGRADIENT compute derivative of sigmoid function on x
+%SIGMOIDGRADIENT Compute derivative of sigmoid function on x
 
 gradient = zeros(size(x));
 

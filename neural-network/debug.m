@@ -10,6 +10,8 @@
 %   longAssVecToCell.m
 %   costFunction.m
 %   costFuncitonIter.m
+%   predict.m
+%   accuracy.m
 
 %% Initialization
 close all;
@@ -59,14 +61,6 @@ if ~isequal(gradientCell, gradientCellExpect)
 end
 fprintf('backwardPropergate.m ok\n');
 
-%% Debug costFunction.m
-[costRun, gradientCellRun] = costFunction(architecturePara, ThetaCell, X, y, regulatingRate);
-if ~isequal(costRun, costExpect) || ~isequal(gradientCellRun, gradientCellExpect)
-    fprintf('costFunction.m ERR\n');
-    return;
-end
-fprintf('costFunction.m ok\n');
-
 %% Debug cellToLongAssVec.m
 ThetaVecRun = cellToLongAssVec(ThetaCell);
 if ~isequal(ThetaVecRun, ThetaVecExpect)
@@ -82,6 +76,14 @@ if ~isequal(ThetaCellRun, ThetaCellExpect)
     return;
 end
 fprintf('longAssVecToCell.m ok\n');
+
+%% Debug costFunction.m
+[costRun, gradientCellRun] = costFunction(architecturePara, ThetaCell, X, y, regulatingRate);
+if ~isequal(costRun, costExpect) || ~isequal(gradientCellRun, gradientCellExpect)
+    fprintf('costFunction.m ERR\n');
+    return;
+end
+fprintf('costFunction.m ok\n');
 
 %% Debug costFunctionIter.m
 [costRun, gradientVecRun] = costFunctionIter(architecturePara, ThetaVec, X, y, regulatingRate);

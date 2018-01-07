@@ -1,4 +1,4 @@
-function gradientCell = backwardPropergate(learningRate, hypoMat, Y, ThetaCell, zCell, aCell)
+function gradientCell = backwardPropergate(regulatingRate, hypoMat, Y, ThetaCell, zCell, aCell)
 %FORWARDPROPERGATE Run backward propergate, returns gradientCell
 %   gradientCell, ThetaCell has same size
 %   gradientCell is derivative of ThetaCell
@@ -40,7 +40,7 @@ for layer = 1:layerNumber - 1
     delta = cell2mat(deltaCell(layer));
     theta = cell2mat(ThetaCell(layer));
     gradientCell(layer) = {(1 / m) * delta + ...
-        (learningRate / m) * [zeros(size(theta, 1), 1) theta(:, 2:end)]};
+        (regulatingRate / m) * [zeros(size(theta, 1), 1) theta(:, 2:end)]};
 end
 
 end

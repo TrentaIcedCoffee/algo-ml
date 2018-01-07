@@ -1,4 +1,4 @@
-function [cost, gradientCell] = costFunction(architecturePara,  ThetaCell, X, y, regulatingRate)
+function [cost, gradientCell] = costFunction(architecturePara, ThetaCell, X, y, regulatingRate)
 %COSTFUNCTION Compute cost and gradient for develope use
 %   for iteration use, go costFunctionIter, wrapped for iteration use
 
