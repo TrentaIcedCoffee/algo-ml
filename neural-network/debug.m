@@ -64,5 +64,21 @@ if ~isequal(costRun, costExpect) || ~isequal(gradientVecRun, gradientVecExpect)
 end
 fprintf('costFunction.m ok\n');
 
+%% Debug cellToLongAssVec.m
+ThetaVecRun = cellToLongAssVec(ThetaCell);
+if ~isequal(ThetaVecRun, ThetaVecExpect)
+    fprintf('cellToLongAssVec.m ERR\n');
+    return;
+end
+fprintf('cellToLongAssVec.m ok\n');
+
+%% Debug longAssVecToCell.m
+ThetaCellRun = longAssVecToCell(ThetaVec, architecturePara);
+if ~isequal(ThetaCellRun, ThetaCellExpect)
+    fprintf('longAssVecToCell.m ERR\n');
+    return;
+end
+fprintf('longAssVecToCell.m ok\n');
+
 %% Summary
 fprintf('all ok\n');
