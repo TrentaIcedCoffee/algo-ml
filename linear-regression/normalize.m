@@ -4,8 +4,8 @@ function [XNormal, meanVec, stdVec] = normalize(X)
 
 [sampleNumber, featureNumber] = size(X);
 XNormal = X;
-meanVec = zeros(1, n);
-stdVec = zeros(1, n);
+meanVec = zeros(1, featureNumber);
+stdVec = zeros(1, featureNumber);
 
 meanVec = mean(X, 1);
 XNormal = X - repmat(meanVec, sampleNumber, 1); % sum(XNormal, 1) = [0 0]
