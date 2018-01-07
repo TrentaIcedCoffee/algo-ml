@@ -1,11 +1,12 @@
-function [cost, gradientVec] = costFunction(architecturePara,  ThetaCell, X, y, regulatingRate)
-%COSTFUNCTION Compute cost and gradient for iteration use
+function [cost, gradientCell] = costFunction(architecturePara,  ThetaCell, X, y, regulatingRate)
+%COSTFUNCTION Compute cost and gradient for develope use
+%   for iteration use, go costFunctionIter, wrapped for iteration use
 
 [m n] = size(X);
 classNumber = architecturePara(end);
 Y = yToY(y, classNumber);
 cost = 0;
-gradientVec = [];
+gradientCell = cell(1, length(architecturePara) - 1);
 
 % forward propergate for hypothesis
 [hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
@@ -20,6 +21,5 @@ penalty = (regulatingRate / (2 * m)) * penalty;
 cost = (-1 / m) * sum(sum(Y .* log(hypoMat) + (1 - Y) .* log(1 - hypoMat))) + penalty;
 % compute gradient, convert it to a 'long-ass' vec with size(~, 1) for iteration
 gradientCell = backwardPropergate(regulatingRate, hypoMat, Y, ThetaCell, zCell, aCell);
-gradientVec = cellToLongAssVec(gradientCell);
 
 end
