@@ -1,6 +1,3 @@
-% TODO polyMap: map X with order 1 to XPoly with given highest order
-% TODO orderVsCost: return optimized order and plot graph: order -> cost
-
 %% Debug for linear-regression
 
 % this file is used to debug following files
@@ -79,6 +76,28 @@ if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
     return;
 end
 fprintf('regulatingRateVsCost.m ok\n');
+
+%% Debug polyMap.m
+XPoly5Run = polyMap([ones(sampleNumber, 1) X], 5);
+if ~isequal(XPoly5Run, XPoly5Expect)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('polyMap.m ok\n');
+
+%% Debug orderVsCost.m
+orderOptRun = orderVsCost([ones(sampleNumber, 1) X], ...
+                             y, ...
+                             [ones(size(XCV, 1), 1) XCV], ...
+                             yCV, ...
+                             regulatingRate, ...
+                             maxIter, ...
+                             10);
+if (orderOptRun ~= orderOptExpect)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('orderVsCost.m ok\n');
 
 %% Summary
 fprintf('all ok\n');
