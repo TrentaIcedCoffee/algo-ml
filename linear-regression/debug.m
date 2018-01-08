@@ -1,3 +1,6 @@
+% TODO polyMap: map X with order 1 to XPoly with given highest order
+% TODO orderVsCost: return optimized order and plot graph: order -> cost
+
 %% Debug for linear-regression
 
 % this file is used to debug following files
