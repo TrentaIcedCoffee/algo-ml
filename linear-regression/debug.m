@@ -3,8 +3,8 @@
 % this file is used to debug following files
 %   normalize.m
 %   costFunction.m
-%   gradiendDescent.m
 %   normalEquation.m
+%   train.m
 
 %% Initialization
 close all;
@@ -24,20 +24,13 @@ end
 fprintf('normalize.m ok\n');
 
 %% Debug costFunction.m
-costRun = costFunction([ones(sampleNumber, 1), X], y, [0; 0]);
-if costRun ~= costExpect
+[costRun, gradientVecRun] = costFunction([ones(sampleNumber, 1) X], y, thetaInitial, regulatingRate);
+
+if costRun ~= costExpect || ~isequal(gradientVecRun, gradientVecExpect)
     fprintf('ERR\n');
     return;
 end
 fprintf('costFunctions.m ok\n');
-
-%% Debug gradientDescent.m
-thetaRunGradientDescent = gradientDescent([ones(sampleNumber, 1), X], y, thetaInitial, learningRate, iterNumber);
-if ~isequal(thetaRunGradientDescent, thetaExpectGradientDescent)
-    fprintf('ERR\n');
-    return;
-end
-fprintf('gradientDescent.m ok\n');
 
 %% Debug normalEquation.m
 thetaRunNormalEquation = normalEquation([ones(sampleNumber, 1), X], y);
@@ -46,6 +39,30 @@ if ~isequal(thetaRunNormalEquation, thetaExpectNormalEquation)
     return;
 end
 fprintf('normalEquation.m ok\n');
+
+%% Debug train.m
+thetaRun = train([ones(sampleNumber, 1) X], y, thetaInitial, regulatingRate, maxIter);
+if ~isequal(thetaRun, thetaExpect)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('train.m ok\n');
+
+%% Debug sampleNumberVsCost.m
+sampleNumberOptRun = sampleNumberVsCost([ones(sampleNumber, 1) X], ...
+                                                                            y, ...
+                                                                            [ones(size(XCV, 1), 1) XCV], ...
+                                                                            yCV, ...
+                                                                            thetaInitial, ... 
+                                                                            regulatingRate, ...
+                                                                            maxIter);
+if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('sampleNumberVsCost.m ok\n');
+
+%% Debug regulatingRateVsCost.m
 
 %% Summary
 fprintf('all ok\n');
