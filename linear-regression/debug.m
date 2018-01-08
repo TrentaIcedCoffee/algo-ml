@@ -5,6 +5,8 @@
 %   costFunction.m
 %   normalEquation.m
 %   train.m
+%   sampleNumberVsCost.m
+%   regulatingRateVsCost.m
 
 %% Initialization
 close all;
@@ -63,6 +65,18 @@ end
 fprintf('sampleNumberVsCost.m ok\n');
 
 %% Debug regulatingRateVsCost.m
+regulatingRateOptRun = regulatingRateVsCost([ones(sampleNumber, 1) X], ...
+                                                                                 y, ...
+                                                                                 [ones(size(XCV, 1), 1) XCV], ...
+                                                                                 yCV, ...
+                                                                                 thetaInitial, ...
+                                                                                 [0, 1000], ...
+                                                                                 maxIter);
+if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
+    fprintf('ERR\n');
+    return;
+end
+fprintf('regulatingRateVsCost.m ok\n');
 
 %% Summary
 fprintf('all ok\n');
