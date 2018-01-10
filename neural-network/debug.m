@@ -18,11 +18,25 @@ close all;
 clear;
 clc;
 
-load('debug.mat')
+load('data.mat');
+load('expect.mat');
+
+%% Debug split.m
+[XRun, yRun, XCVRun, yCVRun, XTestRun, yTestRun] = split(XTotal, yTotal);
+if ~isequal(XRun, XExpect) || ...
+        ~isequal(yRun, yExpect) || ...
+        ~isequal(XCVRun, XCVExpect) || ...
+        ~isequal(yCVRun, yCVExpect) || ...
+        ~isequal(XTestRun, XTestExpect) || ...
+        ~isequal(yTestRun, yTestExpect)
+    fprintf('split.m ERR\n');
+    return;
+end
+fprintf('split.m ok\n');
 
 %% Debug yToY.m
-Y = yToY(y, classNumber);
-if ~isequal(Y, YExpect)
+YRun = yToY(y, classNumber);
+if ~isequal(YRun, YExpect)
     fprintf('yToY.m ERR\n');
     return;
 end
@@ -37,7 +51,7 @@ end
 fprintf('sigmoid.m ok\n');
 
 %% Debug sigmoidGradient.m
-sigmoidGradientRun = sigmoidGradient(0.7);
+sigmoidGradientRun = sigmoidGradient(point);
 if sigmoidGradientRun ~= sigmoidGradientExpect
     fprintf('sigmoidGradient.m ERR\n');
     return;
@@ -45,17 +59,16 @@ end
 fprintf('sigmoidGradient.m ok\n');
 
 %% Debug forwardPropergate.m
-[hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-if ~isequal(hypoMat, hypoMatExpect) || ~isequal(zCell, zCellExpect) || ~isequal(aCell, aCellExpect)
+[hypoMatRun, zCellRun, aCellRun] = forwardPropergate(ThetaCell, X);
+if ~isequal(hypoMatRun, hypoMatExpect) || ~isequal(zCellRun, zCellExpect) || ~isequal(aCellRun, aCellExpect)
     fprintf('forwardPropergate.m ERR\n');
     return;
 end
 fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
-[hypoMat, zCell, aCell] = forwardPropergate(ThetaCell, X);
-gradientCell = backwardPropergate(regulatingRate, hypoMat, YExpect, ThetaCell, zCell, aCell);
-if ~isequal(gradientCell, gradientCellExpect)
+gradientCellRun = backwardPropergate(regulatingRate, hypoMat, Y, ThetaCell, zCell, aCell);
+if ~isequal(gradientCellRun, gradientCellExpect)
     fprintf('backwardPropergate.m ERR\n');
     return;
 end
@@ -93,6 +106,14 @@ if ~isequal(costRun, costExpect) || ~isequal(gradientVecRun, gradientVecExpect)
 end
 fprintf('costFunctionIter.m ok\n');
 
+%% Debug train.m
+ThetaCellTrainedRun = train(X, y, ThetaCellInitial, regulatingRate, maxIter, architecturePara);
+if ~isequal(ThetaCellTrainedRun, ThetaCellTrainedExpect)
+    fprintf('train.m ERR\n');
+    return;
+end
+fprintf('train.m ok\n');
+
 %% Debug predict.m
 predRun = predict(ThetaCell, X);
 if ~isequal(predRun, predExpect)
@@ -102,25 +123,34 @@ end
 fprintf('predict.m ok\n');
 
 %% Debug accuracy.m
-pred = predict(ThetaCell, X);
 accuracyRun = accuracy(pred, y);
 if ~isequal(accuracyRun, accuracyExpect)
     fprintf('accuracy.m ERR\n');
     return;
 end
 fprintf('accuracy.m ok\n');
+%% sampleNumberVsCost.m
+
+
+%% orderVsCost.m
+
 
 %% Summary
 fprintf('all ok\n');
 
 %% Run
-ThetaInitialCell = randThetaCell(architecturePara);
-ThetaInitialVec = cellToLongAssVec(ThetaInitialCell);
+[XTotal, yTotal] = shuffle(XTotal, yTotal);
+[X, y, XCV, yCV, XTest, yTest] = split(XTotal, yTotal);
 
-options = optimset('MaxIter', 200);
-costFunctionIterUse = @(pThetaVec) costFunctionIter(architecturePara, pThetaVec, X, y, regulatingRate);
+[sampleNumber, featureNumber] = size(X);
+classNumber = 10;
+architecturePara = [featureNumber, 25, classNumber]
+regulatingRate = 1;
+maxIter = 200;
 
-[ThetaVec, cost] = fmincg(costFunctionIterUse, ThetaInitialVec, options);
-ThetaCell = longAssVecToCell(ThetaVec, architecturePara);
-pAccuracy = accuracy(predict(ThetaCell, X), y);
-fprintf('accuracy %.2f\n', pAccuracy);
+ThetaCell = train(X, y, randThetaCell(architecturePara), regulatingRate, maxIter, architecturePara);
+
+accuracyTrain = accuracy(predict(ThetaCell, X), y);
+accuracyCV = accuracy(predict(ThetaCell, XCV), yCV);
+fprintf('train accuracy %.2f\n', accuracyTrain);
+fprintf('cross validation %.2f\n', accuracyCV);

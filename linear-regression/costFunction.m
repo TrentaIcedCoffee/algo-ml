@@ -13,4 +13,3 @@ cost = (1 / (2 * sampleNumber)) * (hypothesis - y)' * (hypothesis - y) + penalty
 gradientVec = (1 / sampleNumber) * (X' * (hypothesis - y) + regulatingRate * thetaRegulate);
 
 end
-
