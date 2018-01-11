@@ -27,12 +27,12 @@ load('expect.mat');
 
 %% Debug split.m
 [XRun, yRun, XCVRun, yCVRun, XTestRun, yTestRun] = split(XTotal, yTotal);
-if ~isequal(XRun, XExpect) || ...
-    ~isequal(yRun, yExpect) || ...
-    ~isequal(XCVRun, XCVExpect) || ...
-    ~isequal(yCVRun, yCVExpect) || ...
-    ~isequal(XTestRun, XTestExpect) || ...
-    ~isequal(yTestRun, yTestExpect)
+if ~isApprox(XRun, XExpect) || ...
+    ~isApprox(yRun, yExpect) || ...
+    ~isApprox(XCVRun, XCVExpect) || ...
+    ~isApprox(yCVRun, yCVExpect) || ...
+    ~isApprox(XTestRun, XTestExpect) || ...
+    ~isApprox(yTestRun, yTestExpect)
     fprintf('split.m ERR\n');
     return;
 end
@@ -40,7 +40,7 @@ fprintf('split.m ok\n');
 
 %% Debug yToY.m
 YRun = yToY(y, classNumber);
-if ~isequal(YRun, YExpect)
+if ~isApprox(YRun, YExpect)
     fprintf('yToY.m ERR\n');
     return;
 end
@@ -64,7 +64,7 @@ fprintf('sigmoidGradient.m ok\n');
 
 %% Debug forwardPropergate.m
 [hypoMatRun, zCellRun, aCellRun] = forwardPropergate(ThetaCell, X);
-if ~isequal(hypoMatRun, hypoMatExpect) || ~isequal(zCellRun, zCellExpect) || ~isequal(aCellRun, aCellExpect)
+if ~isApprox(hypoMatRun, hypoMatExpect) || ~isApprox(zCellRun, zCellExpect) || ~isApprox(aCellRun, aCellExpect)
     fprintf('forwardPropergate.m ERR\n');
     return;
 end
@@ -72,7 +72,7 @@ fprintf('forwardPropergate.m ok\n');
 
 %% Debug backwardPropergate.m
 gradientCellRun = backwardPropergate(regulatingRate, hypoMat, Y, ThetaCell, zCell, aCell);
-if ~isequal(gradientCellRun, gradientCellExpect)
+if ~isApprox(gradientCellRun, gradientCellExpect)
     fprintf('backwardPropergate.m ERR\n');
     return;
 end
@@ -80,7 +80,7 @@ fprintf('backwardPropergate.m ok\n');
 
 %% Debug cellToLongAssVec.m
 ThetaVecRun = cellToLongAssVec(ThetaCell);
-if ~isequal(ThetaVecRun, ThetaVecExpect)
+if ~isApprox(ThetaVecRun, ThetaVecExpect)
     fprintf('cellToLongAssVec.m ERR\n');
     return;
 end
@@ -88,7 +88,7 @@ fprintf('cellToLongAssVec.m ok\n');
 
 %% Debug longAssVecToCell.m
 ThetaCellRun = longAssVecToCell(ThetaVec, architecturePara);
-if ~isequal(ThetaCellRun, ThetaCellExpect)
+if ~isApprox(ThetaCellRun, ThetaCellExpect)
     fprintf('longAssVecToCell.m ERR\n');
     return;
 end
@@ -96,7 +96,7 @@ fprintf('longAssVecToCell.m ok\n');
 
 %% Debug costFunction.m
 [costRun, gradientCellRun] = costFunction(architecturePara, ThetaCell, X, y, regulatingRate);
-if ~isequal(costRun, costExpect) || ~isequal(gradientCellRun, gradientCellExpect)
+if ~isApprox(costRun, costExpect) || ~isApprox(gradientCellRun, gradientCellExpect)
     fprintf('costFunction.m ERR\n');
     return;
 end
@@ -104,7 +104,7 @@ fprintf('costFunction.m ok\n');
 
 %% Debug costFunctionIter.m
 [costRun, gradientVecRun] = costFunctionIter(architecturePara, ThetaVec, X, y, regulatingRate);
-if ~isequal(costRun, costExpect) || ~isequal(gradientVecRun, gradientVecExpect)
+if ~isApprox(costRun, costExpect) || ~isApprox(gradientVecRun, gradientVecExpect)
     fprintf('costFunctionIter.m ERR\n');
     return;
 end
@@ -112,7 +112,7 @@ fprintf('costFunctionIter.m ok\n');
 
 %% Debug train.m
 ThetaCellTrainedRun = train(X, y, ThetaCellInitial, regulatingRate, maxIter, architecturePara);
-if ~isequal(ThetaCellTrainedRun, ThetaCellTrainedExpect)
+if ~isApprox(ThetaCellTrainedRun, ThetaCellTrainedExpect)
     fprintf('train.m ERR\n');
     return;
 end
@@ -120,7 +120,7 @@ fprintf('train.m ok\n');
 
 %% Debug predict.m
 predRun = predict(ThetaCell, X);
-if ~isequal(predRun, predExpect)
+if ~isApprox(predRun, predExpect)
     fprintf('predict.m ERR\n');
     return;
 end
@@ -128,7 +128,7 @@ fprintf('predict.m ok\n');
 
 %% Debug accuracy.m
 accuracyRun = accuracy(pred, y);
-if ~isequal(accuracyRun, accuracyExpect)
+if ~isApprox(accuracyRun, accuracyExpect)
     fprintf('accuracy.m ERR\n');
     return;
 end
@@ -136,7 +136,7 @@ fprintf('accuracy.m ok\n');
 
 %% Debug sampleNumberVsCost.m
 sampleNumberOptRun = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, regulatingRate, 200, architecturePara, 2998:1:3000);
-if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
+if ~isApprox(sampleNumberOptRun, sampleNumberOptExpect)
     fprintf('sampleNumberVsCost.m ERR\n');
     return;
 end
@@ -144,7 +144,7 @@ fprintf('sampleNumberVsCost.m ok\n');
 
 %% Debug regulatingRateVsCost.m
 regulatingRateOptRun = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:5:10, maxIter, architecturePara);
-if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
+if ~isApprox(regulatingRateOptRun, regulatingRateOptExpect)
     fprintf('regulatingRateVsCost.m ERR\n');
     return;
 end
