@@ -1,4 +1,4 @@
-%% Debug for neural-network
+%% Debug for neural_network
 
 % this file is used to debug the following files
 %   split.m
@@ -135,7 +135,7 @@ end
 fprintf('accuracy.m ok\n');
 
 %% Debug sampleNumberVsCost.m
-sampleNumberOptRun = sampleNumberVsCost(X, y, XCV, yCV, ThetaCell, regulatingRate, 200, architecturePara, [2998, 3000]);
+sampleNumberOptRun = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, regulatingRate, 200, architecturePara, 2998:1:3000);
 if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
     fprintf('sampleNumberVsCost.m ERR\n');
     return;
@@ -143,7 +143,7 @@ end
 fprintf('sampleNumberVsCost.m ok\n');
 
 %% Debug regulatingRateVsCost.m
-regulatingRateOptRun = regulatingRateVsCost(X, y, XCV, yCV, ThetaCell, [0, 10], maxIter, architecturePara);
+regulatingRateOptRun = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:5:10, maxIter, architecturePara);
 if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
     fprintf('regulatingRateVsCost.m ERR\n');
     return;
