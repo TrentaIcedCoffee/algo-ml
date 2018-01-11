@@ -1,3 +1,6 @@
+% TODO: following code is guaranteed corrct.
+%       Redecide parameters then run on a production machine
+
 %% neural network model for handwritten digits
 
 %   Train handwritten digits using neural network model
@@ -51,5 +54,3 @@ fprintf('cross validation accuracy %.2f\n', accuracyCV);
 fprintf('test accuracy %.2f\n', accuracyTest);
 
 %% Algorithm details
-
-

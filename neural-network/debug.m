@@ -1,6 +1,7 @@
 %% Debug for neural-network
 
 % this file is used to debug the following files
+%   split.m
 %   yToY.m
 %   sigmoid.m
 %   sigmoidGradient.m
@@ -10,8 +11,11 @@
 %   longAssVecToCell.m
 %   costFunction.m
 %   costFuncitonIter.m
+%   train.m
 %   predict.m
 %   accuracy.m
+%   sampleNumberVsCost.m
+%   regulatingRateVsCost.m
 
 %% Initialization
 close all;
@@ -24,11 +28,11 @@ load('expect.mat');
 %% Debug split.m
 [XRun, yRun, XCVRun, yCVRun, XTestRun, yTestRun] = split(XTotal, yTotal);
 if ~isequal(XRun, XExpect) || ...
-        ~isequal(yRun, yExpect) || ...
-        ~isequal(XCVRun, XCVExpect) || ...
-        ~isequal(yCVRun, yCVExpect) || ...
-        ~isequal(XTestRun, XTestExpect) || ...
-        ~isequal(yTestRun, yTestExpect)
+    ~isequal(yRun, yExpect) || ...
+    ~isequal(XCVRun, XCVExpect) || ...
+    ~isequal(yCVRun, yCVExpect) || ...
+    ~isequal(XTestRun, XTestExpect) || ...
+    ~isequal(yTestRun, yTestExpect)
     fprintf('split.m ERR\n');
     return;
 end
@@ -130,7 +134,7 @@ if ~isequal(accuracyRun, accuracyExpect)
 end
 fprintf('accuracy.m ok\n');
 
-%% sampleNumberVsCost.m
+%% Debug sampleNumberVsCost.m
 sampleNumberOptRun = sampleNumberVsCost(X, y, XCV, yCV, ThetaCell, regulatingRate, 200, architecturePara, [2998, 3000]);
 if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
     fprintf('sampleNumberVsCost.m ERR\n');
@@ -138,7 +142,7 @@ if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
 end
 fprintf('sampleNumberVsCost.m ok\n');
 
-%% regulatingRateVsCost.m
+%% Debug regulatingRateVsCost.m
 regulatingRateOptRun = regulatingRateVsCost(X, y, XCV, yCV, ThetaCell, [0, 10], maxIter, architecturePara);
 if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
     fprintf('regulatingRateVsCost.m ERR\n');
