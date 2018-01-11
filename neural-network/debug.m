@@ -1,4 +1,4 @@
-%% Debug for neural network
+%% Debug for neural-network
 
 % this file is used to debug the following files
 %   yToY.m
@@ -129,28 +129,22 @@ if ~isequal(accuracyRun, accuracyExpect)
     return;
 end
 fprintf('accuracy.m ok\n');
+
 %% sampleNumberVsCost.m
+sampleNumberOptRun = sampleNumberVsCost(X, y, XCV, yCV, ThetaCell, regulatingRate, 200, architecturePara, [2998, 3000]);
+if ~isequal(sampleNumberOptRun, sampleNumberOptExpect)
+    fprintf('sampleNumberVsCost.m ERR\n');
+    return;
+end
+fprintf('sampleNumberVsCost.m ok\n');
 
-
-%% orderVsCost.m
-
+%% regulatingRateVsCost.m
+regulatingRateOptRun = regulatingRateVsCost(X, y, XCV, yCV, ThetaCell, [0, 10], maxIter, architecturePara);
+if ~isequal(regulatingRateOptRun, regulatingRateOptExpect)
+    fprintf('regulatingRateVsCost.m ERR\n');
+    return;
+end
+fprintf('regulatingRateVsCost.m ok\n');
 
 %% Summary
 fprintf('all ok\n');
-
-%% Run
-[XTotal, yTotal] = shuffle(XTotal, yTotal);
-[X, y, XCV, yCV, XTest, yTest] = split(XTotal, yTotal);
-
-[sampleNumber, featureNumber] = size(X);
-classNumber = 10;
-architecturePara = [featureNumber, 25, classNumber]
-regulatingRate = 1;
-maxIter = 200;
-
-ThetaCell = train(X, y, randThetaCell(architecturePara), regulatingRate, maxIter, architecturePara);
-
-accuracyTrain = accuracy(predict(ThetaCell, X), y);
-accuracyCV = accuracy(predict(ThetaCell, XCV), yCV);
-fprintf('train accuracy %.2f\n', accuracyTrain);
-fprintf('cross validation %.2f\n', accuracyCV);
