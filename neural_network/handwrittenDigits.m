@@ -1,5 +1,5 @@
 % TODO: following code is guaranteed corrct.
-%       Redecide parameters then run on a production machine
+%       Run on a production machine
 
 %% neural network model for handwritten digits
 
@@ -30,16 +30,22 @@ yRaw = y;
 [sampleNumber, featureNumber] = size(X);
 classNumber = 10;
 architecturePara = [400, 25, 10];
-maxIter = 200;
+maxIter = 400;
 ThetaCellInitial = randThetaCell(architecturePara);
 
-%% Optimize sample number
-sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, [2998, 3000]);
+%% Optimize sample number (takes < 5h)
+tic
+sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 2000:1:3000);
 X = X(1:sampleNumberOpt, :);
 y = y(1:sampleNumberOpt, :);
+toc
+
+disp(sampleNumberOpt);
+
+return;
 
 %% Optimize regulating rate (lambda)
-regulatingRateOpt = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, [0, 10], maxIter, architecturePara);
+regulatingRateOpt = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:5:10, maxIter, architecturePara);
 regulatingRate = regulatingRateOpt;
 
 %% Compute Theta
