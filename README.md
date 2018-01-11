@@ -11,7 +11,7 @@
 	 - Cross validation curve (cv) and training curve (train) never across. 
 	 - Difference between cv and train is getting smaller as sample increases
 	 - Relatively high cv cost and low train cost  
-	 ![high_variance](TODO)
+	 ![high_variance](https://github.com/TrentaIcedCoffee/algo-ml/blob/master/readme_resource/high_variance.png)
 
  
 		
