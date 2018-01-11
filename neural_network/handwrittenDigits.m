@@ -35,7 +35,7 @@ ThetaCellInitial = randThetaCell(architecturePara);
 
 %% Optimize sample number (takes < 5h)
 tic
-sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 2000:1:3000);
+sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 1:1:1000);
 X = X(1:sampleNumberOpt, :);
 y = y(1:sampleNumberOpt, :);
 toc
