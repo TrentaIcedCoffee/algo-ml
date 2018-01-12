@@ -32,21 +32,29 @@ classNumber = 10;
 architecturePara = [400, 25, 10];
 maxIter = 400;
 ThetaCellInitial = randThetaCell(architecturePara);
+ThetaVecInitial = cellToLongAssVec(ThetaCellInitial);
 
 %% Optimize sample number (takes < 5h)
-tic
-sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 1:1:1000);
-X = X(1:sampleNumberOpt, :);
-y = y(1:sampleNumberOpt, :);
-toc
-
-disp(sampleNumberOpt);
-
-return;
+% sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 2950:1:3000);
+% X = X(1:sampleNumberOpt, :);
+% y = y(1:sampleNumberOpt, :);
 
 %% Optimize regulating rate (lambda)
-regulatingRateOpt = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:5:10, maxIter, architecturePara);
-regulatingRate = regulatingRateOpt;
+% use sampleNumberOpt from RUN 1
+sampleNumberOpt = 2989;
+X = X(1:sampleNumberOpt, :);
+y = y(1:sampleNumberOpt, :);
+
+tic
+
+costFunctionIterUse = @(pRegulatingRate) costFunctionIter(architecturePara, ThetaVecInitial, X, y, pRegulatingRate);
+[regulatingRateOpt, costOpt] = binarySearch([0, 10], 1, costFunctionIterUse);
+
+toc
+
+fprintf('regulatingRate: %.2f, cost: %.2f\n', regulatingRateOpt, costOpt);
+
+return;
 
 %% Compute Theta
 ThetaCell = train(X, y, ThetaCellInitial, regulatingRate, maxIter, architecturePara);
