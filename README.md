@@ -39,4 +39,4 @@
 ### Analysis Before Run 2
 - Since this is a high variance case, we might need high regulating rate (lambda) to avoid overfitting.
 - We hope to see a convex curve and find the lowest point.
-- We firstly try [0:1:100], then use binary search with tolerance 0.01 to find the lowest point.
+- We firstly try [0:1:100], then find the lowest point with precision tolerance 0.01.
