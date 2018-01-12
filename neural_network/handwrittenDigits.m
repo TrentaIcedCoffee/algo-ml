@@ -47,8 +47,8 @@ y = y(1:sampleNumberOpt, :);
 
 tic
 
-costFunctionIterUse = @(pRegulatingRate) costFunctionIter(architecturePara, ThetaVecInitial, X, y, pRegulatingRate);
-[regulatingRateOpt, costOpt] = binarySearch([0, 10], 1, costFunctionIterUse);
+trainUse = @(pRegulatingRate) train(X, y, ThetaCellInitial, pRegulatingRate, maxIter, architecturePara);
+[regulatingRateOpt, costOpt] = binarySearch([0, 10], 1, trainUse);
 
 toc
 
