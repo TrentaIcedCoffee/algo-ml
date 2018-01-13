@@ -1,6 +1,5 @@
-% TODO: following code is guaranteed corrct.
-%       Run on a production machine
-
+% NOTE Run the following code on a production machine,
+%   taking less than 8 hours
 %% neural network model for handwritten digits
 
 %   Train handwritten digits using neural network model
@@ -32,30 +31,18 @@ classNumber = 10;
 architecturePara = [400, 25, 10];
 maxIter = 400;
 ThetaCellInitial = randThetaCell(architecturePara);
-ThetaVecInitial = cellToLongAssVec(ThetaCellInitial);
 
 %% Optimize sample number (takes < 5h)
-% sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 2950:1:3000);
-% X = X(1:sampleNumberOpt, :);
-% y = y(1:sampleNumberOpt, :);
-
-%% Optimize regulating rate (lambda)
-% use sampleNumberOpt from RUN 1
-sampleNumberOpt = 2989;
+sampleNumberOpt = sampleNumberVsCost(X, y, XCV, yCV, ThetaCellInitial, 0, maxIter, architecturePara, 2950:1:3000);
 X = X(1:sampleNumberOpt, :);
 y = y(1:sampleNumberOpt, :);
 
-tic
-
+%% Optimize regulating rate (lambda)
 regulatingRateOpt = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:1:10, maxIter, architecturePara);
-
-toc
-
-disp(regulatingRateOpt);
-
-return;
+regulatingRate = regulatingRateOpt;
 
 %% Compute Theta
+maxIter = 4000;
 ThetaCell = train(X, y, ThetaCellInitial, regulatingRate, maxIter, architecturePara);
 
 %% Accuracy
