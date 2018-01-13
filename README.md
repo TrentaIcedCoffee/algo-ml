@@ -1,4 +1,3 @@
-
 # Report - Nerual Network on Handwritten Digits Recognition
 
 ### Preparation
@@ -15,8 +14,7 @@
 - If it's a high-variance case, we hope to see the plot like below. 
 	- Cross validation curve and training curve never go across. 
 	- Difference between cv and train is getting smaller as sample increases
-	- Relatively high cross validation cost and low train cost  
-	![high_variance](https://github.com/TrentaIcedCoffee/algo-ml/blob/master/readme_resource/high_variance.png)
+	- Relatively high cross validation cost and low train cost  	![high_variance](https://github.com/TrentaIcedCoffee/algo-ml/blob/master/readme_resource/high_variance.png)
 
 ### Run 1 
 #### sample number [2000, 3000] (max iteration 400, 1001 runs, takes 2.23 hours)
@@ -26,9 +24,10 @@
 - We fail to see convergence.
 - Cross validation and train have similar and low cost.
 - We need to run sample number [1, 1000] to see if cross validation and train converge.  
-#### sample number [1, 1000] (max iteration 400, 1001 runs, takes 0.84 hours)  
+#### sample number [1, 1000] (max iteration 400, 1001 runs, takes 0.84 hour)  
 ![run1_1_1000](https://github.com/TrentaIcedCoffee/algo-ml/blob/ali/readme_resource/run1_1_1000.jpg)  
 - We see cross validation and train converge, thus we infer they also converge on [2000, 3000].
+
 ### Analysis After Run 1
 - High-variance case.
 - Acceptable, relatively low cross validation cost means that we don't need to collect more train data.
@@ -39,4 +38,23 @@
 ### Analysis Before Run 2
 - Since this is a high variance case, we might need high regulating rate (lambda) to avoid overfitting.
 - We hope to see a convex curve and find the lowest point.
-- We firstly try [0:1:100], then find the lowest point with precision tolerance 0.01.
+- We firstly try [0, 10], then find the lowest point with precision tolerance 0.01.
+
+### Run 2
+#### lambda [0, 10] (max iteration 400, 11 runs, takes less than 1 minute)
+![run2_0_10](https://github.com/TrentaIcedCoffee/algo-ml/blob/master/readme_resource/run2_0_10.jpg)  
+- We see a convex lambda curve.
+- The lambda curve has minimum in range [0, 2].
+- We can run [0, 2] with precision 0.01 to find accurate minimum.  
+#### lambda [0, 2] (max iteration 400, 201 runs, takes 0.56 hour)
+![run2_0_2](https://github.com/TrentaIcedCoffee/algo-ml/blob/master/readme_resource/run2_0_2.jpg)
+- Above curves follow the same routine.
+- We find minimum lambda 0.88.
+
+---
+### Analysis Before Run 3
+- We obtained two most optimized value, sample number 2989 and lambda 0.88, we just need to use these values to train learning model. Since we've already did everything to optimize this model, if we don't find a high accuracy, we may want to try different architectures.
+
+### Run 3
+
+
