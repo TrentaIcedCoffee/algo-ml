@@ -1,1 +1,1 @@
-# machine learning algorithm implemented in MATLAB
+# machine learning algorithms implemented in MATLAB
