@@ -47,12 +47,11 @@ y = y(1:sampleNumberOpt, :);
 
 tic
 
-trainUse = @(pRegulatingRate) train(X, y, ThetaCellInitial, pRegulatingRate, maxIter, architecturePara);
-[regulatingRateOpt, costOpt] = binarySearch([0, 10], 1, trainUse);
+regulatingRateOpt = regulatingRateVsCost(X, y, XCV, yCV, ThetaCellInitial, 0:1:10, maxIter, architecturePara);
 
 toc
 
-fprintf('regulatingRate: %.2f, cost: %.2f\n', regulatingRateOpt, costOpt);
+disp(regulatingRateOpt);
 
 return;
 
