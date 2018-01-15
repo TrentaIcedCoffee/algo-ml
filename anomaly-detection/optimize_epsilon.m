@@ -13,7 +13,7 @@ for epsilon = linspace(min(vec_hypo_cv), max(vec_hypo_cv), 1000)
     precision = truePositive / (truePositive + falsePositive);
     recall = truePositive / (truePositive + falseNegative);
     f1 = (2 * precision * recall) / (precision + recall);
-    
+
     if f1 > f1_opt
         epsilon_opt = epsilon;
         f1_opt = f1;
