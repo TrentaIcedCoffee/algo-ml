@@ -33,3 +33,18 @@ for i = 1:length(index_expect)
         return;
     end
 end
+
+%% Debug naive_gaussian.m
+[vec_mean_run, vec_var_run] = naive_gaussian(X_train);
+if ~isequal(vec_mean_run, vec_mean_expect) || ...
+    ~isequal(vec_var_run, vec_var_expect)
+    fprintf('ERR, naive_gaussian.m\n');
+    return;
+end
+
+%% Debug multivariate_gaussian.m
+vec_hypo_train_run = multivariate_gaussian(vec_mean, vec_var, X_train);
+if ~isequal(vec_hypo_train_run, vec_hypo_train_expect)
+    fprintf('ERR, multivariate_gaussian.m\n');
+    return;
+end
