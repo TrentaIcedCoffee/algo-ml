@@ -48,3 +48,11 @@ if ~isequal(vec_hypo_train_run, vec_hypo_train_expect)
     fprintf('ERR, multivariate_gaussian.m\n');
     return;
 end
+
+%% Debug optimize_epsilon.m
+[epsilon_opt_run, f1_opt_run] = optimize_epsilon(vec_hypo_cv_expect, y_cv)
+if ~isequal(epsilon_opt_run, epsilon_opt_expect) || ...
+    ~isequal(f1_opt_run, f1_opt_expect)
+    fprintf('ERR, optimize_epsilon.m\n');
+    return;
+end
